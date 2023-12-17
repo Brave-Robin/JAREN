@@ -1,9 +1,9 @@
 --CREATE DATABASE test1;
 
 CREATE TABLE todos (
-	todo_id serial PRIMARY KEY,
-	todo_text text NOT NULL,
-	todo_due_date date,
-	todo_blocked_by int,
-	todo_user_id int
+	id serial PRIMARY KEY,
+	text text NOT NULL,
+	due_date date,
+	blocked_by int,
+	user_id int
     );
