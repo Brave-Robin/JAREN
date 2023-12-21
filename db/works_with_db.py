@@ -2,9 +2,15 @@
 
 import psycopg2
 
-conn = psycopg2.connect("host=127.0.0.1 port=5432 dbname=test user=postgres password=mysecretpassword target_session_attrs=read-write")
+conn = psycopg2.connect("host=127.0.0.1 port=5432 dbname=postgres user=postgres password=mysecretpassword target_session_attrs=read-write")
 
 cur = conn.cursor()
 
-cur.execute("INSERT INTO todos VALUES (2, 'test text again');")
+# cur.execute("CREATE TABLE todo_germych (id serial PRIMARY KEY, text text NOT NULL, due_date date, "
+#             "blocked_by int, user_id int);")
+
+
+cur.execute("INSERT INTO todo_germych VALUES (5, 'MechJeb 2, Kerbal Interstellar Extended, Kerbal Engineer Redux');")
+
+
 conn.commit()

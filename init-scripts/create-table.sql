@@ -1,6 +1,6 @@
 --CREATE DATABASE test1;
 
-CREATE TABLE todos (
+CREATE TABLE todo_germych (
 	id serial PRIMARY KEY,
 	text text NOT NULL,
 	due_date date,
