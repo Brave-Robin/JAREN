@@ -10,7 +10,9 @@ cur = conn.cursor()
 #             "blocked_by int, user_id int);")
 
 
-cur.execute("INSERT INTO todo_germych VALUES (5, 'MechJeb 2, Kerbal Interstellar Extended, Kerbal Engineer Redux');")
+# cur.execute("INSERT INTO todo_germych VALUES (5, 'MechJeb 2, Kerbal Interstellar Extended, Kerbal Engineer Redux');")
 
+
+cur.execute("UPDATE todo_germych SET due_date='12-21-2023' WHERE id=5;")
 
 conn.commit()
