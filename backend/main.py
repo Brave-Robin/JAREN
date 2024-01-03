@@ -1,3 +1,4 @@
+""" to_do backend part """
 import psycopg2
 from fastapi import FastAPI
 
@@ -15,28 +16,30 @@ conn = psycopg2.connect(
 cur = conn.cursor()
 
 
-def get_all_notes(count=5):
+def get_all_notes(count: int = 5) -> list:
+    """
+    :param count: select limit from DB
+    :return: list of lists
+    """
     cur.execute(f"select id, text, due_date, blocked_by, user_id from todos limit {count}")
     data = cur.fetchall()
     return data
 
 
-def get_minimal_available_id():
+def get_minimal_available_id() -> int:
+    """
+    :param: none
+    :return: integer next minimal ID
+    """
     cur.execute('SELECT MAX(id) FROM todos')
     minimal_id = cur.fetchone()[0]
     return minimal_id + 1
 
 
 @app.get("/")
-async def root():
-    # return {"message": "Hello World"}
+async def root() -> list:
+    """
+    :param: none
+    :return: all notes
+    """
     return get_all_notes()
-
-
-"""
-add column status. Execute in dbeaver
-
---ALTER TABLE todos
---ADD todo_status boolean NOT NULL DEFAULT False;
-
-"""
