@@ -21,7 +21,7 @@ def get_all_notes(count: int = 5) -> list:
     :param count: select limit from DB
     :return: list of lists
     """
-    cur.execute(f"select id, text, due_date, blocked_by, user_id from todos limit {count}")
+    cur.execute(f"select id, text, due_date, blocked_by, status, user_id from todos limit {count}")
     data = cur.fetchall()
     return data
 
