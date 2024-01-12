@@ -1,8 +1,9 @@
 """ to_do backend part """
+from typing import Any
+
 import psycopg2
 from fastapi import FastAPI
 from pydantic import BaseModel
-
 
 app = FastAPI()
 
@@ -26,12 +27,12 @@ class Item(BaseModel):
     """
     to_do validation
     """
-    id: int
-    text: str
-    due_date: str | None = 'NULL'
-    blocked_by: int | None = 0
-    status: bool | None = False
-    user_id: int
+    todo_id: int
+    todo_text: str
+    todo_due_date: str | None = 'NULL'
+    todo_blocked_by: int | None = 0
+    todo_status: bool | None = False
+    todo_user_id: int
 
 
 def get_all_notes(count: int = 10) -> list:
@@ -40,7 +41,14 @@ def get_all_notes(count: int = 10) -> list:
     :return: list of lists
     """
     cur.execute(
-        f"select id, text, due_date, blocked_by, status, user_id from todos limit {count}"
+        f"select "
+        f"todo_id, "
+        f"todo_text, "
+        f"todo_due_date, "
+        f"todo_blocked_by, "
+        f"todo_status, "
+        f"todo_user_id "
+        f"from todos limit {count}"
     )
     data = cur.fetchall()
     return data
@@ -51,8 +59,10 @@ def get_minimal_available_id() -> int:
     :param: none
     :return: integer next minimal ID
     """
-    cur.execute('SELECT MAX(id) FROM todos')
+    cur.execute('SELECT MAX(todo_id) FROM todos')
     minimal_id = cur.fetchone()[0]
+    if minimal_id is None:
+        return 1
     return minimal_id + 1
 
 
@@ -66,24 +76,30 @@ async def root() -> list:
 
 
 @app.put("/create/")
-async def update_item(text: str, due_date: str, blocked_by: int, status: bool, user_id: int):
+async def update_item(
+        todo_text: str,
+        todo_due_date: str,
+        todo_blocked_by: int,
+        todo_status: bool,
+        todo_user_id: int
+):
     """
-    :param text:
-    :param due_date:
-    :param blocked_by:
-    :param status:
-    :param user_id:
-    :return: status code
+    :param todo_text:
+    :param todo_due_date:
+    :param todo_blocked_by:
+    :param todo_status:
+    :param todo_user_id:
+    :return: todo_status code
     """
     new_id: int = get_minimal_available_id()
     cur.execute(
         f"INSERT INTO todos Values("
         f"{new_id}, "
-        f"'{text}', "
-        f"'{due_date}', "
-        f"'{blocked_by}', "
-        f"'{status}', "
-        f"'{user_id}'"
+        f"'{todo_text}', "
+        f"'{todo_due_date}', "
+        f"'{todo_blocked_by}', "
+        f"'{todo_status}', "
+        f"'{todo_user_id}'"
         f");"
     )
     # TODO: need return web codes 200, 500, etc.
