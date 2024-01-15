@@ -105,3 +105,41 @@ async def update_item(
     # TODO: need return web codes 200, 500, etc.
     conn.commit()
     return 200
+
+
+@app.put("/update/{todo_id}")
+def update_data(
+        todo_id: int,
+        todo_text: str,
+        todo_due_date: str,
+        todo_blocked_by: int,
+        todo_status: bool,
+        todo_user_id: int
+):
+    cur.execute(
+        f"UPDATE todos SET "
+        f"todo_text = '{todo_text}', "
+        f"todo_due_date = '{todo_due_date}', "
+        f"todo_blocked_by = '{todo_blocked_by}', "
+        f"todo_status = '{todo_status}', "
+        f"todo_user_id = '{todo_user_id}' "
+        f"WHERE todo_id = {todo_id} "
+        f";"
+    )
+    conn.commit()
+    return 200
+
+
+@app.delete("/delete/{todo_id}")
+def delete_data(
+        todo_id: int,
+):
+    cur.execute(
+        f"DELETE FROM todos "
+        f"WHERE todo_id = {todo_id} "
+        f";"
+    )
+    conn.commit()
+    return 200
+
+
