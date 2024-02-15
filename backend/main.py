@@ -1,5 +1,4 @@
 """ to_do backend part """
-from typing import Any
 
 import psycopg2
 from fastapi import FastAPI
@@ -75,6 +74,8 @@ async def root() -> list:
     return get_all_notes()
 
 
+# TODO: Create app for convert cyrillic text to UTF-8 URL text
+
 @app.put("/create/")
 async def update_item(
         todo_text: str,
@@ -103,6 +104,7 @@ async def update_item(
         f");"
     )
     # TODO: need return web codes 200, 500, etc.
+    # TODO: add checks from DB (transactions)
     conn.commit()
     return 200
 
