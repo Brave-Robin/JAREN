@@ -20,7 +20,17 @@ INSERT INTO todos (todo_text,todo_due_date,todo_blocked_by,todo_status,todo_user
 	 ('რა არის სივრცე','2024-05-30',NULL,true,1002),
 	 ('რა არის მორალი','2025-01-01',NULL,true,1002),
 	 ('რა არის საზოგადოება','2024-09-21',NULL,false,1002),
-	 ('რა არის არაფერი','2026-06-06',NULL,false,1002);
+	 ('რა არის არაფერი','2026-06-06',NULL,false,1002),
+	 ('купіць корм кацяню','2024-03-10',0,true,1003),
+	 ('знайсці новае люстэрка для калідора','2024-04-15',NULL,true,1003),
+	 ('сустрэць сяброў на чыгуначным вакзале','2024-10-05',NULL,false,1003),
+	 ('забраніраваць квіткі на канцэрт','2024-09-15',NULL,false,1003),
+	 ('павіншаваць бабулю з днём нараджэння','2024-11-09',NULL,false,1003),
+	 ('выбраць новую страву іспанскай кухні і прыгатаваць яе','2024-01-09',NULL,true,1003),
+	 ('забраніраваць білеты на самалёт','2024-06-02',8,false,1003),
+	 ('знайсці гатэль для адпачынку','2024-06-01',9,false,1003),
+	 ('узгадніць водпуск','2024-04-01',NULL,false,1003),
+	 ('знайсці незвычайную фігурку ў гандлёвым цэнтры','2024-02-11',NULL,true,1003);
 
 
 --create DATABASE todo;
@@ -39,7 +49,7 @@ INSERT INTO todos (todo_text,todo_due_date,todo_blocked_by,todo_status,todo_user
 
 --ALTER TABLE todos ADD user_id int;
 --SELECT MAX(todo_id) FROM todos;
-select * from todos t;
+--select * from todos t;
 
 --SELECT CURRENT_DATE;
 --SELECT EXTRACT(EPOCH FROM NOW());
