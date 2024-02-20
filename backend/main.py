@@ -34,7 +34,7 @@ class Item(BaseModel):
     todo_user_id: int
 
 
-def get_all_notes(count: int = 10) -> list:
+def get_all_notes(count: int = 50) -> list:
     """
     :param count: select limit from DB
     :return: list of lists
@@ -103,8 +103,8 @@ async def update_item(
         f"'{todo_user_id}'"
         f");"
     )
-    # TODO: need return web codes 200, 500, etc.
     # TODO: add checks from DB (transactions)
+    # TODO: need return web codes 200, 500, etc.
     conn.commit()
     return 200
 
