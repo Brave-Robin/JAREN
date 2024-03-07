@@ -67,6 +67,30 @@ def get_minimal_available_id() -> int:
     return minimal_id + 1
 
 
+def check_data(new_id, todo_text, todo_due_date, todo_blocked_by, todo_status, todo_user_id):
+    cur.execute(
+        f"select todo_id, "
+        f"todo_text, "
+        f"todo_due_date, "
+        f"todo_blocked_by, "
+        f"todo_status, "
+        f"todo_user_id "
+        f"from todos "
+        f"where "
+        f"todo_id = {new_id} and "
+        f"todo_text = '{todo_text}' and "
+        f"to_char(todo_due_date, 'YYYY-MM-DD') = '{todo_due_date}' and "
+        # f"todo_blocked_by = null and "
+        f"todo_status = '{todo_status}' and "
+        f"todo_user_id = '{todo_user_id}';"
+    )
+    if len(str(cur.fetchone())) > 5:
+        return True
+    return False
+# TODO: Fix SQL query todo_blocked_by
+
+
+
 @app.get("/")
 async def root() -> list:
     """
@@ -76,7 +100,10 @@ async def root() -> list:
     return get_all_notes()
 
 
-# TODO: Create app for convert cyrillic text to UTF-8 URL text
+# @app.get("/test")
+# async def root():
+#     return check_data()
+
 
 @app.put("/create/")
 async def update_item(
@@ -105,10 +132,11 @@ async def update_item(
         f"'{todo_user_id}'"
         f");"
     )
-    # TODO: add checks from DB (transactions)
-    # TODO: need return web codes 200, 500, etc.
+    # TODO: need return web codes 200, 500, etc. need use web-signal(WEB SERVER ERROR TYPES)
     conn.commit()
-    return 200
+    if check_data(new_id, todo_text, todo_due_date, todo_blocked_by, todo_status, todo_user_id):
+        return 200
+    return 500
 
 
 @app.put("/update/{todo_id}")
