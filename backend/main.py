@@ -1,6 +1,8 @@
 """ to_do backend part """
 
 import psycopg2
+import os
+
 from fastapi import FastAPI
 from pydantic import BaseModel
 
